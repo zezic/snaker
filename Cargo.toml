@@ -1,0 +1,14 @@
+[package]
+name = "snaker"
+version = "0.1.0"
+authors = ["Sergey Ukolov <zezic51@yandex.ru>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crossterm = { version = "0.19", features = ["event-stream"] }
+futures = "0.3"
+futures-timer = "3.0"
+async-std = "1.4"
+rand = "0.8.3"
