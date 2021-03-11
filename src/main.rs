@@ -118,12 +118,12 @@ async fn game_loop() {
             _ = delay => {
                 let mut stdout = stdout();
                 queue!(stdout, terminal::Clear(terminal::ClearType::All));
-                snake.draw();
-                planned_delay = target_delay;
                 match snake.step() {
                     Err(err) => { break; },
                     _ => {}
                 };
+                snake.draw();
+                planned_delay = target_delay;
             },
             maybe_event = event => {
                 match maybe_event {
