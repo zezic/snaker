@@ -68,7 +68,7 @@ impl Snake {
         let mut stdout = stdout();
         for point in self.body.iter() {
             let Point{x, y} = point;
-            queue!(stdout, cursor::MoveTo(*x, *y));
+            queue!(stdout, cursor::MoveTo(*x, *y)).unwrap();
             print!("x");
             stdout.flush().unwrap();
         }
@@ -117,9 +117,9 @@ async fn game_loop() {
         select! {
             _ = delay => {
                 let mut stdout = stdout();
-                queue!(stdout, terminal::Clear(terminal::ClearType::All));
+                queue!(stdout, terminal::Clear(terminal::ClearType::All)).unwrap();
                 match snake.step() {
-                    Err(err) => { break; },
+                    Err(_) => { break; },
                     _ => {}
                 };
                 snake.draw();
@@ -158,12 +158,12 @@ fn main() -> crossterm::Result<()> {
     terminal::enable_raw_mode()?;
 
     let mut stdout = stdout();
-    execute!(stdout, terminal::Clear(terminal::ClearType::All));
-    execute!(stdout, cursor::Hide);
+    execute!(stdout, terminal::Clear(terminal::ClearType::All))?;
+    execute!(stdout, cursor::Hide)?;
 
     async_std::task::block_on(game_loop());
 
-    execute!(stdout, cursor::Show);
+    execute!(stdout, cursor::Show)?;
 
     terminal::disable_raw_mode()
 }
